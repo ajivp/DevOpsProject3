@@ -8,6 +8,26 @@ const version = process.env.APP_VERSION || 'blue';
 app.use(express.json());
 client.collectDefaultMetrics();
 
+const httpRequests = new client.Counter({
+  name: 'http_requests_total',
+  help: 'Total HTTP requests received',
+  labelNames: ['service', 'method', 'route', 'status_code'],
+});
+
+// Count requests after each response completes.
+app.use((req, res, next) => {
+  res.on('finish', () => {
+    httpRequests.inc({
+      service: name,
+      method: req.method,
+      route: req.route?.path || req.path,
+      status_code: String(res.statusCode),
+    });
+  });
+  next();
+});
+
+
 app.get('/health', (req, res) => res.json({ status: 'healthy' }));
 app.get('/ready', (req, res) => res.json({ status: 'ready' }));
 
