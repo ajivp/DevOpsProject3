@@ -19,3 +19,5 @@ npm-debug.log*
 *.tfstate
 *.tfstate.*
 crash.log
+
+creds.txt
