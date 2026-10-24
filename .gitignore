@@ -1,0 +1,21 @@
+# Minikube binary
+minikube-linux-amd64
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+kubeconfig
+
+# Dependencies and logs
+node_modules/
+npm-debug.log*
+*.log
+
+# Terraform generated files
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
